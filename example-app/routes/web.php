@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\homeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +17,11 @@ use App\Http\Controllers\AuthController;
 */
 
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::get('/',[homeController::class,'index'])->middleware('auth')->name('home');
+Route::get('/dashboard',[dashboardController::class,'index'])->middleware('auth')->name('dashboard');
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login',[AuthController::class,'index'])->name('login');
+Route::post('/login',[AuthController::class,'login'])->name('login.submit');
+Route::get('/logout',[AuthController::class,'logout'])->middleware('auth')->name('logout');
+Route::get('/register',[AuthController::class,'registration'])->name('registration');
+Route::post('/register',[AuthController::class,'register'])->name('register');
