@@ -1,7 +1,6 @@
 @extends('layout.app')
 
 @section('content')
-    <h1>Registration Page</h1>
     <Style>
         form {
             width: 300px;
@@ -10,6 +9,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+            margin-top: 5rem;
         }
 
         label {
@@ -43,6 +43,10 @@
         }
     </Style>
     <form action="{{route('register')}}" method="post">
+        <div class="buttons">
+            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('registration') }}">Signup</a>
+        </div>
         @csrf
         <div>
             <label for="name">Name
@@ -70,7 +74,7 @@
             <input type="password" name="password" id="password">
         </div>
         <div>
-            <button>Submit</button>
+            <button>Signup</button>
         </div>
     </form>
 @endsection

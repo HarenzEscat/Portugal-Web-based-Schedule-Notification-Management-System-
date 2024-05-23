@@ -1,10 +1,6 @@
 @extends('layout.app')
 
 @section('content')
-    <h1>Authentication Page</h1>
-    @error('message')
-        <p>{{$message}}</p>
-    @enderror
     <Style>
         form {
             width: 300px;
@@ -13,6 +9,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+            margin-top: 5rem;
         }
 
         label {
@@ -46,6 +43,11 @@
         }
     </Style>
     <form action="{{route('login.submit')}}" method="post">
+        <div class="buttons">
+            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('registration') }}">Signup</a>
+
+        </div>
         @csrf
         <div>
             <label for="username">Username</label>
@@ -57,9 +59,10 @@
         </div>
         <div>
             <button>Login</button>
-        </div>
-        <div class="signup">
-            <a href="{{ route('registration') }}">Signup</a>
+                @error('message')
+                    <span style="color:red">{{$message}}</span>
+                @enderror
+
         </div>
     </form>
 @endsection
