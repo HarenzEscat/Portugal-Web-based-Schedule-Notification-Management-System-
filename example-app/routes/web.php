@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\homeController;
+
+//admin controllers
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +19,26 @@ use App\Http\Controllers\homeController;
 */
 
 
-Route::get('/',[homeController::class,'index'])->middleware('auth')->name('home');
-Route::get('/dashboard',[dashboardController::class,'index'])->middleware('auth')->name('dashboard');
+//admin navigations
+Route::view('/', 'dashboard')->name('dashboard');
 
-Route::get('/login',[AuthController::class,'index'])->name('login');
-Route::post('/login',[AuthController::class,'login'])->name('login.submit');
-Route::get('/logout',[AuthController::class,'logout'])->middleware('auth')->name('logout');
-Route::get('/register',[AuthController::class,'registration'])->name('registration');
-Route::post('/register',[AuthController::class,'register'])->name('register');
+Route::view('/schedule', 'schedule')->name('schedule');
+Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
+Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+Route::post('/notifications', [NotificationController::class, 'store'])->name('notifications.store');
+Route::get('/notifications/{id}/edit', [NotificationController::class, 'edit'])->name('notifications.edit');
+Route::put('/notifications/{id}', [NotificationController::class, 'update'])->name('notifications.update');
+Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+Route::get('/profiles', [UserProfileController::class, 'index'])->name('profiles');
+Route::get('/profiles/create', [UserProfileController::class, 'create'])->name('profiles.create');
+Route::post('/profiles', [UserProfileController::class, 'store'])->name('profiles.store');
+Route::get('/profiles/{id}/edit', [UserProfileController::class, 'edit'])->name('profiles.edit');
+Route::put('/profiles/{id}', [UserProfileController::class, 'update'])->name('profiles.update');
+Route::delete('/profiles/{id}', [UserProfileController::class, 'destroy'])->name('profiles.destroy');
+
+
+
