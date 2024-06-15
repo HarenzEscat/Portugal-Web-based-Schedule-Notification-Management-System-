@@ -7,6 +7,8 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserProfileController;
 
+//user cntrollers
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,3 +44,6 @@ Route::delete('/profiles/{id}', [UserProfileController::class, 'destroy'])->name
 
 
 
+Route::view('/user/dashboard', 'userdashboard')->name('user.dashboard');
+Route::get('/user/profile', [UserProfileController::class, 'aa'])->name('user.profile');
+Route::get('/user/settings', [UserSettingsController::class, 'index'])->name('user.settings');

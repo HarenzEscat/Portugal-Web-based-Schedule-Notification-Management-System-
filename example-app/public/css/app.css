@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 footer {
@@ -19,13 +19,3 @@ footer {
 }
 
 
-.d-flex .flex-column {
-    height: 100vh;
-    position: fixed;
-    right: 0;
-    top: 0;
-}
-
-.container-fluid {
-    margin-right: 250px; 
-}
