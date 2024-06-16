@@ -45,5 +45,5 @@ Route::delete('/profiles/{id}', [UserProfileController::class, 'destroy'])->name
 
 
 Route::view('/user/dashboard', 'userdashboard')->name('user.dashboard');
-Route::get('/user/profile', [UserProfileController::class, 'aa'])->name('user.profile');
-Route::get('/user/settings', [UserSettingsController::class, 'index'])->name('user.settings');
+Route::view('/user/profile', 'userprofiles')->name('userprofile');
+Route::view('/user/settings', 'usersettings')->name('user.settings');

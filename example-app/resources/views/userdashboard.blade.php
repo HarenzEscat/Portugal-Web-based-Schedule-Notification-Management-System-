@@ -106,11 +106,10 @@
     </div>
 </div>
 
-<!-- Notification Modal -->
 <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header">
                 <h5 class="modal-title" id="notificationModalLabel">Notify Event</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -122,6 +121,23 @@
                     <p id="notificationDetails"></p>
                     <input type="hidden" name="time" id="notificationTime">
                     <input type="hidden" name="day" id="notificationDay">
+                    <input type="hidden" name="event" id="notificationEvent">
+                    <div class="form-group">
+                        <label for="priorityLevel">Priority Level</label>
+                        <select class="form-control" id="priorityLevel" name="priority" required>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationType">Notification Type</label>
+                        <select class="form-control" id="notificationType" name="type" required>
+                            <option value="Popup Alert">Popup Alert</option>
+                            <option value="Sound Alert">Sound Alert</option>
+                            <option value="Vibration Alert">Vibration Alert</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="notificationMessage">Notification Message</label>
                         <textarea class="form-control" id="notificationMessage" name="message" rows="3" required></textarea>
@@ -129,12 +145,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send Notification</button>
+                    <button type="submit" class="btn btn-primary">Save Notification</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 
 @section('scripts')
 <script>
