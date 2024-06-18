@@ -15,20 +15,18 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                <th colspan="8" class="text-center bg-primary text-white" style="position: sticky; top: 0; width: 100%; z-index: 999;">{{ date('F Y') }}</th>
-
+                                    <th colspan="8" class="text-center bg-primary text-white" style="position: sticky; top: 0; width: 100%; z-index: 999;">{{ date('F Y') }}</th>
+                                </tr>
                                 <tr class="text-center">
                                     <th class="border"></th>
                                     @php
-                                        // Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-                                        $currentDayOfWeek = date('w');
+                                        // Start on Monday
+                                        $startDay = strtotime('next Monday');
                                     @endphp
                                     @for ($i = 0; $i < 7; $i++)
                                         @php
-                                            // Calculate the date for each day of the week
-                                            $day = date('j', strtotime("+$i days"));
-                                            // Calculate the day name (e.g., Sun, Mon, Tue, ...)
-                                            $dayName = date('D', strtotime("+$i days"));
+                                            $day = date('j', strtotime("+$i days", $startDay));
+                                            $dayName = date('D', strtotime("+$i days", $startDay));
                                         @endphp
                                         <th class="border bg-light">{{ $dayName }} {{ $day }}</th>
                                     @endfor
@@ -36,42 +34,72 @@
                             </thead>
                             <tbody>
                                 @php
-                                    // Example schedules (replace with your dynamic data)
+                                    // Define schedules for each time slot and day
                                     $schedules = [
                                         '08:00' => [
-                                            ['Class Subject: Math', 'Payment Due', 'Announcement: School Holiday'],
+                                            'Mon' => 'Class Subject: Math',
+                                            'Tue' => '',
+                                            'Wed' => 'Announcement: School Holiday',
+                                            'Thu' => '',
+                                            'Fri' => '',
+                                            'Sat' => 'Payment Due',
+                                            'Sun' => '',
                                         ],
                                         '10:00' => [
-                                            ['Examination: Science', 'Class Subject: Physics', 'Announcement: Staff Meeting'],
+                                            'Mon' => 'Examination: Science',
+                                            'Tue' => 'Class Subject: Physics',
+                                            'Wed' => '',
+                                            'Thu' => '',
+                                            'Fri' => 'Announcement: Staff Meeting',
+                                            'Sat' => '',
+                                            'Sun' => '',
                                         ],
                                         '14:00' => [
-                                            ['Class Subject: Chemistry', 'Announcement: Sports Day', 'Payment Due'],
+                                            'Mon' => 'Class Subject: Chemistry',
+                                            'Tue' => '',
+                                            'Wed' => 'Announcement: Sports Day',
+                                            'Thu' => '',
+                                            'Fri' => '',
+                                            'Sat' => 'Payment Due',
+                                            'Sun' => '',
                                         ],
                                         '16:00' => [
-                                            ['Class Subject: History', 'Examination: Mathematics', 'Announcement: Field Trip'],
+                                            'Mon' => 'Class Subject: History',
+                                            'Tue' => 'Examination: Mathematics',
+                                            'Wed' => '',
+                                            'Thu' => '',
+                                            'Fri' => 'Announcement: Field Trip',
+                                            'Sat' => '',
+                                            'Sun' => '',
                                         ],
                                         '18:00' => [
-                                            ['Class Subject: Art', 'Announcement: Cultural Festival', 'Payment Due'],
-                                        ]
+                                            'Mon' => 'Class Subject: Art',
+                                            'Tue' => '',
+                                            'Wed' => 'Announcement: Cultural Festival',
+                                            'Thu' => '',
+                                            'Fri' => '',
+                                            'Sat' => 'Payment Due',
+                                            'Sun' => '',
+                                        ],
                                     ];
                                 @endphp
 
                                 @foreach ($schedules as $time => $events)
                                     <tr>
                                         <td class="border text-center bg-light">{{ $time }}</td>
-                                        @for ($day = 1; $day <= 7; $day++)
+                                        @foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $dayName)
                                             <td class="p-0 border position-relative text-center calendar-cell">
-                                                <ul class="list-unstyled mb-0 position-absolute events-list">
-                                                    @foreach ($events as $event)
-                                                        <li>{{ $event[$day - 1] ?? '' }}</li>
-                                                    @endforeach
-                                                </ul>
-                                                <button class="btn btn-sm btn-outline-success notify-btn"
-                                                        data-time="{{ $time }}"
-                                                        data-day="{{ $day }}"
-                                                        data-toggle="modal" data-target="#notificationModal">Notify</button>
+                                                @if (!empty($events[$dayName]))
+                                                    <ul class="list-unstyled mb-0 position-relative events-list">
+                                                        <li>{{ $events[$dayName] }}</li>
+                                                    </ul>
+                                                    <button class="btn btn-sm btn-outline-success notify-btn"
+                                                            data-time="{{ $time }}"
+                                                            data-day="{{ array_search($dayName, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']) + 1 }}"
+                                                            data-toggle="modal" data-target="#notificationModal">Notify</button>
+                                                @endif
                                             </td>
-                                        @endfor
+                                        @endforeach
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -88,16 +116,18 @@
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach ($schedules as $time => $events)
-                            @foreach ($events as $event)
+                            @if (count(array_filter($events)) > 0)
                                 <li class="list-group-item">
                                     <strong class="text-primary">{{ $time }}</strong>
                                     <ul class="list-unstyled">
-                                        @foreach ($event as $schedule)
-                                            <li>{{ $schedule }}</li>
+                                        @foreach ($events as $day => $schedule)
+                                            @if (!empty($schedule))
+                                                <li>{{ $day }}: {{ $schedule }}</li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </li>
-                            @endforeach
+                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -152,15 +182,19 @@
     </div>
 </div>
 
+@endsection
 
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('.calendar-cell').hover(function() {
-            $(this).find('.events-list').fadeIn();
-        }, function() {
-            $(this).find('.events-list').fadeOut();
-        });
+        $('.calendar-cell').hover(
+            function() {
+                $(this).find('.notify-btn').css('display', 'block');
+            },
+            function() {
+                $(this).find('.notify-btn').css('display', 'none');
+            }
+        );
 
         $('.notify-btn').click(function() {
             var time = $(this).data('time');
@@ -177,34 +211,21 @@
 <style>
     .table-bordered th,
     .table-bordered td {
-        border: 1px solid #dee2e6; /* Default border color */
-        width: 150px; /* Adjusted width of calendar cells */
-        min-width: 150px; /* Ensure minimum width */
-        position: relative; /* Ensure positioning context */
+        border: 1px solid #dee2e6;
+        width: 150px;
+        min-width: 150px;
+        position: relative;
     }
 
     .events-list {
-        display: none; /* Hide events list by default */
-        position: absolute;
+        position: relative;
         background-color: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        border: 1px solid #ccc;
-        padding: 5px;
-        z-index: 100;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 100%;
-        width: 100%; /* Adjusted width for events list */
-        max-width: 200px; /* Maximum width for events list */
+        width: 100%;
     }
 
     .calendar-cell {
-        position: relative; /* Ensure positioning context for absolute children */
-        height: 100px; /* Set height for each cell */
-    }
-
-    .calendar-cell:hover .events-list {
-        display: block; /* Show events list on hover */
+        position: relative;
+        height: 100px;
     }
 
     .notify-btn {
@@ -212,16 +233,14 @@
         bottom: 5px;
         left: 50%;
         transform: translateX(-50%);
-        display: none;
+        display: none; /* Initially hidden */
     }
 
     .calendar-cell:hover .notify-btn {
-        display: block;
+        display: block; /* Display on hover */
     }
 
     .table-responsive {
-        overflow-x: auto; /* Add horizontal scroll for the table */
+        overflow-x: auto;
     }
 </style>
-
-@endsection
