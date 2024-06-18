@@ -24,10 +24,13 @@ use App\Http\Controllers\UserProfileController;
 //admin navigations
 Route::view('/', 'dashboard')->name('dashboard');
 
-Route::view('/schedule', 'schedule')->name('schedule');
+// Route::view('/schedule', 'schedule')->name('schedule');
 Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule');
-Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
-Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+Route::get('/schedule/add', [ScheduleController::class, 'createSchedule'])->name('schedule.create');
+Route::post('/schedule', [ScheduleController::class, 'storeSchedule'])->name('schedule.store');
+Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'deleteSchedule'])->name('deleteSchedule');
+Route::get('/schedule/update/{id}', [ScheduleController::class, 'updateSchedule'])->name('updateSchedule');
+Route::put('/schedule/updated/{id}', [ScheduleController::class, 'updatedSchedule'])->name('updatedSchedule');
 
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
 Route::post('/notifications', [NotificationController::class, 'store'])->name('notifications.store');

@@ -6,16 +6,12 @@
     <title>Schedule Notification System</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/apps.css') }}">
+    <script src="https://kit.fontawesome.com/e19061c169.js" crossorigin="anonymous"></script>
 
-    <style>
-        body {
-            padding-top: 4.5rem; /* Adjust based on your navbar height */
-        }
-    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('user.dashboard') }}">SNMS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,13 +20,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('user.dashboard') }}"><i class="fas fa-home"></i></a>
+                        <span class="hover-text">Dashboard</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('userprofile') }}">Profile</a>
+                        <a class="nav-link" href="{{ route('userprofile') }}"><i class="fas fa-user"></i></a>
+                        <span class="hover-text">Profile</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.settings') }}">Settings</a>
+                        <a class="nav-link" href="{{ route('user.settings') }}"><i class="fas fa-gear"></i></i></a>
+                        <span class="hover-text">Settings</span>
                     </li>
                 </ul>
             </div>

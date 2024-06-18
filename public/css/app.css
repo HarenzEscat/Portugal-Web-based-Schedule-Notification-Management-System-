@@ -1,0 +1,56 @@
+body {
+    padding-top: 56px;
+}
+
+nav{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.container {
+    padding-top: 5px;
+}
+
+.nav-item, a, i{
+    position: relative;
+    margin: 0 15px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.hover-text {
+    font-family: "San Francisco", Arial, sans-serif;
+    font-size: 12px;
+    color: #fff;
+    background-color: #4b4b4b;
+    padding: 8px;
+    border-radius: .5rem;
+    position: absolute;
+    bottom: -43px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.nav-item:hover .hover-text {
+    opacity: 1;
+}
+
+.nav-item:hover{
+    background-color: rgba(123, 123, 123, 0.08);
+    border-radius: .5rem;
+}
+
+footer {
+    width: 100%;
+    height: 30px;
+    background-color: #f8f9fa;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+}
+
+
